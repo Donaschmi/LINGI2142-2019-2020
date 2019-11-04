@@ -1,0 +1,71 @@
+[
+    {
+        "interfaces": [
+            {
+                "ipv6": "fde4:8:10::11/64",
+                "name": "eth0"
+            },
+            {
+                "ipv6": "fde4:8:11::11/64",
+                "name": "eth1"
+            },
+            {
+                "ipv6": "fde4:8:12::11/64",
+                "name": "eth2"
+            },
+            {
+                "ipv6": "fde4:8::11/128",
+                "name": "lo"
+            }
+        ],
+        "namemin": "p1",
+        "id": 1,
+        "name": "P1"
+    },
+    {
+        "interfaces": [
+            {
+                "ipv6": "fde4:8:20::22/64",
+                "name": "eth0"
+            },
+            {
+                "ipv6": "fde4:8:21::22/64",
+                "name": "eth1"
+            },
+            {
+                "ipv6": "fde4:8:22::22/64",
+                "name": "eth2"
+            },
+            {
+                "ipv6": "fde4:8::22/128",
+                "name": "lo"
+            }
+        ],
+        "namemin": "p2",
+        "id": 2,
+        "name": "P2"
+    },
+    {
+        "interfaces": [
+            {
+                "ipv6": "fde4:8:30::33/64",
+                "name": "eth0"
+            },
+            {
+                "ipv6": "fde4:8:31::33/64",
+                "name": "eth1"
+            },
+            {
+                "ipv6": "fde4:8:32::33/64",
+                "name": "eth2"
+            },
+            {
+                "ipv6": "fde4:8::33/128",
+                "name": "lo"
+            }
+        ],
+        "namemin": "p3",
+        "id": 3,
+        "name": "P3"
+    }
+]

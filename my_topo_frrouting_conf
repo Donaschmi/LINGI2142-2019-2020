@@ -56,7 +56,6 @@ function mk_topo {
     add_link P1 P4
 
     echo "@@ Bridging the network"
-    bridge_node P1 eth1 P1-eth4
-
+    bridge_node P1 eth3 hello
 }
 
