@@ -6,8 +6,8 @@ import json
 from Network import Network
 
 def main(network):
-    test_ping_google(network)
-
+    test_ospf(network)
+    #test_ping_google(network)
 
 def test_ping_google(network):
     failed = 0
@@ -27,6 +27,34 @@ def test_ping_google(network):
             print(r_name + " - Ping of Google failed")
             failed += 1
         child.sendline('exit')
+    ratio = (succeed / (succeed + failed)) * 100
+    print("Ran ping test for", str(len(network.routers)), "routers :")
+    print("Success : " , succeed)
+    print("Fail : " , failed)
+    print("Ratio : " , ratio , "%")
+
+def test_ospf(network):
+    failed = 0
+    succeed = 0
+    for r in network.routers:
+        router = network.routers[r]
+        r_name = router.name
+        print("Connecting to "+ r_name)
+        child = pexpect.spawn('sudo ../connect_to.sh ' + network.topo + ' ' + r_name)
+        child.expect("bash-4.3#")
+        print("Connected")
+        for n in network.routers:
+            neigh = network.routers[n]
+            if r_name == neigh.name:
+                continue
+            child.sendline('ping6 ' + neigh.lo + ' -c 1')
+            idx = child.expect(['0% packet loss', r'\d+% packet loss', 'connect: Network is unreachable'], timeout=5)
+            if idx == 0:
+                print(r_name + " - Success pinging " + neigh.name)
+                succeed += 1
+            else:
+                print(r_name + " - Fail pinging " + neigh.name)
+                failed += 1
     ratio = (succeed / (succeed + failed)) * 100
     print("Ran ping test for", str(len(network.routers)), "routers :")
     print("Success : " , succeed)

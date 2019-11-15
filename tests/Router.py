@@ -10,6 +10,10 @@ class Router():
         self.id = json_config["id"]
         self.namemin = json_config["namemin"]
         self.interfaces = json_config["interfaces"]
+        self.lo = ""
+
+    def set_loopback(self, addr):
+       self.lo = addr
 
     def retrieve_neigh_addr(self):
         for interface in self.interfaces:
