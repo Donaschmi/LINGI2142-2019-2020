@@ -5,9 +5,40 @@ import pexpect
 import json
 from Network import Network
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 def main(network):
-    test_ospf(network)
-    #test_ping_google(network)
+    print("Network created, beginning tests.")
+
+    print("Beginning OSPF test")
+    ospf_test = test_ospf(network)
+    print("OSPF test completed \n")
+    if ospf_test:
+        print(bcolors.OKGREEN + "OSPF test succeed" + bcolors.ENDC)
+    else:
+        print(bcolors.FAIL + "OSPF test failed" + bcolors.ENDC)
+
+    print("Beginning eBGP test")
+    ebgp_test = test_ping_google(network)
+    print("eBGP test completed \n")
+    if ebgp_test:
+        print(bcolors.OKGREEN + "eBGP test succeed" + bcolors.ENDC)
+    else:
+        print(bcolors.FAIL + "eBGP test failed" + bcolors.ENDC)
+
+    print("End of tests")
+    if not ebgp_test or not ospf_test:
+        print(bcolors.FAIL + "At least one test failed : Network not operationnal" + bcolors.ENDC)
+    else:
+        print(bcolors.OKGREEN + "All tests passed : Network operationnal" + bcolors.ENDC)
 
 def test_ping_google(network):
     failed = 0
@@ -33,6 +64,8 @@ def test_ping_google(network):
     print("Fail : " , failed)
     print("Ratio : " , ratio , "%")
 
+    return failed == 0
+
 def test_ospf(network):
     failed = 0
     succeed = 0
@@ -42,7 +75,6 @@ def test_ospf(network):
         print("Connecting to "+ r_name)
         child = pexpect.spawn('sudo ../connect_to.sh ' + network.topo + ' ' + r_name)
         child.expect("bash-4.3#")
-        print("Connected")
         for n in network.routers:
             neigh = network.routers[n]
             if r_name == neigh.name:
@@ -60,6 +92,8 @@ def test_ospf(network):
     print("Success : " , succeed)
     print("Fail : " , failed)
     print("Ratio : " , ratio , "%")
+
+    return failed == 0
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
