@@ -20,6 +20,7 @@ class Network():
                 child.sendline('ifconfig lo')
                 child.expect("bash-4.3#")
                 output = child.before.decode("utf-8")
+                child.sendline('exit')
                 # Split the result to filter the loopback address
                 splited = output.split()
                 for s in splited:

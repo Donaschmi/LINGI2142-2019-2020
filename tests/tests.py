@@ -4,16 +4,7 @@ import argparse
 import pexpect
 import json
 from Network import Network
-
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+from utils import *
 
 def main(network):
     print("Network created, beginning tests.")
@@ -34,8 +25,16 @@ def main(network):
     else:
         print(bcolors.FAIL + "eBGP test failed" + bcolors.ENDC)
 
+    print("Beginning BGP neighbours test (should be neighbour with 65007 65009 65010")
+    neigh_test = test_bgp_neigh(network)
+    print("BGP neighborhood test completed \n")
+    if neigh_test:
+        print(bcolors.OKGREEN + "BGP neighborhood test succeed" + bcolors.ENDC)
+    else:
+        print(bcolors.FAIL + "BGP neighborhood test failed" + bcolors.ENDC)
+
     print("End of tests")
-    if not ebgp_test or not ospf_test:
+    if not ebgp_test or not ospf_test or not neigh_test:
         print(bcolors.FAIL + "At least one test failed : Network not operationnal" + bcolors.ENDC)
     else:
         print(bcolors.OKGREEN + "All tests passed : Network operationnal" + bcolors.ENDC)
@@ -58,12 +57,7 @@ def test_ping_google(network):
             print(r_name + " - Ping of Google failed")
             failed += 1
         child.sendline('exit')
-    ratio = (succeed / (succeed + failed)) * 100
-    print("Ran ping test for", str(len(network.routers)), "routers :")
-    print("Success : " , succeed)
-    print("Fail : " , failed)
-    print("Ratio : " , ratio , "%")
-
+    print_results(succeed, failed, str(len(network.routers)))
     return failed == 0
 
 def test_ospf(network):
@@ -87,12 +81,42 @@ def test_ospf(network):
             else:
                 print(r_name + " - Fail pinging " + neigh.name)
                 failed += 1
-    ratio = (succeed / (succeed + failed)) * 100
-    print("Ran ping test for", str(len(network.routers)), "routers :")
-    print("Success : " , succeed)
-    print("Fail : " , failed)
-    print("Ratio : " , ratio , "%")
+    print_results(succeed, failed, str(len(network.routers)))
+    return failed == 0
 
+def test_bgp_neigh(network):
+    failed = 0
+    succeed = 0
+    for r in network.routers:
+        router = network.routers[r]
+        r_name = router.name
+        print("Connecting to "+ r_name)
+        child = pexpect.spawn('sudo ../connect_to.sh ' + network.topo + ' ' + r_name)
+        child.expect("bash-4.3#")
+        child.sendline('LD_LIBRARY_PATH=/usr/local/lib vtysh')
+        child.expect("group8#")
+        child.sendline('show bgp json')
+        child.expect('group8#')
+        # Retieve output
+        output = child.before.decode("utf-8")
+        # Don't need the ssh connections so close them
+        child.sendline('exit')
+        child.expect('bash-4.3#')
+        child.sendline('exit')
+        # Remove junks
+        if "bgpd is not running" in output:
+            failed += 1
+            continue
+        output = trim_from_start(output, '{')
+        routes = json.loads(output)['routes']
+        # Should have eBGP connections with AS9, AS10 and
+        for r in routes:
+            if routes[r][0]['prefix'] in ['fde4:4::', 'fde4:9::']:
+                succeed += 1
+                continue
+            failed += 1
+
+    print_results(succeed, failed, str(len(network.routers)))
     return failed == 0
 
 if __name__ == "__main__":
