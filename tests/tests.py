@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+__author__ = "Donatien Schmitz"
+__license__ = "MIT License"
+__version__ = "1.0.1"
+__maintainer__ = "Donatien Schmitz"
+__email__ = "donatien.schmitz@student.uclouvain.be"
+__status__ = "Production"
+
 import argparse
 import pexpect
 import json
@@ -25,7 +32,7 @@ def main(network):
     else:
         print(bcolors.FAIL + "eBGP test failed" + bcolors.ENDC)
 
-    print("Beginning BGP neighbours test (should be neighbour with 65007 65009 65010")
+    print("Beginning BGP neighbours test (should be neighbour with 65004 65009 65010)")
     neigh_test = test_bgp_neigh(network)
     print("BGP neighborhood test completed \n")
     if neigh_test:
@@ -40,6 +47,16 @@ def main(network):
         print(bcolors.OKGREEN + "All tests passed : Network operationnal" + bcolors.ENDC)
 
 def test_ping_google(network):
+    """
+        Test the reaching of outstide world of the network
+
+        Connects to each router and try to ping google DNS
+        The network has been initialised before
+
+        :param network: a Network instance
+        :return: The number of failed test
+        :rtype: int
+    """
     failed = 0
     succeed = 0
     for r in network.routers:
@@ -61,6 +78,16 @@ def test_ping_google(network):
     return failed == 0
 
 def test_ospf(network):
+    """
+        Test the reaching of routers inside the network
+
+        Connects to each router and try to reach every other routers
+        by pinging their loopback address.
+
+        :param network: a Network instance
+        :return: The number of failed test
+        :rtype: int
+    """
     failed = 0
     succeed = 0
     for r in network.routers:
@@ -85,6 +112,18 @@ def test_ospf(network):
     return failed == 0
 
 def test_bgp_neigh(network):
+    """
+        Test the reaching of other AS by the network
+
+        Connects to each router and then launch a vtysh instance.
+        Then show the json version of the bgp infos and fetch the connected AS
+        Fails if an AS it is not supposed to be connected is
+        Fails if not connected to an AS it is supposed to
+
+        :param network: a Network instance
+        :return: The number of failed test
+        :rtype: int
+    """
     failed = 0
     succeed = 0
     for r in network.routers:

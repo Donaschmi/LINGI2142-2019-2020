@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+__author__ = "Donatien Schmitz"
+__license__ = "MIT License"
+__version__ = "1.0.1"
+__maintainer__ = "Donatien Schmitz"
+__email__ = "donatien.schmitz@student.uclouvain.be"
+__status__ = "Production"
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -11,7 +18,10 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def print_results(succeed, failed, nbre):
-    ratio = (succeed / (succeed + failed)) * 100
+    try:
+        ratio = (succeed / (succeed + failed)) * 100
+    except ZeroDivisionError:
+        return
     print("Ran ping test for", nbre, "routers :")
     print("Success : " , succeed)
     print("Fail : " , failed)
