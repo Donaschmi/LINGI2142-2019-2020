@@ -43,19 +43,44 @@ function mk_topo {
     # Build a small network   \      /
     #                          \    /
     #                            P2
+    #
+    #       
+    #
+    # 
+    #           
+    #            AS4---P3---P4                  AS4: shared-cost
+    #                 /       \             
+    #        AS10--->P2       P5               AS10: We provide (back-up link)
+    #               /           \
+    #      AS7--->P1           P6              AS7: We provide
+    #               \           /
+    #       AS9 <---P0        P7               AS9: Our provider
+    #                 \       /
+    #                  P9---P8
+    #
+    #
+    #
+
+
     # Nodes are creadted on the fly, and their interface are assigned as
     # <node name>-eth<count>, where count starts at 0 and is increased by 1
     # after each new interface
-    # e.g. P1-eth0 links to P2-eth0
+
+    # P1-eth0 links to P2-eth0
     add_link P1 P2
     # P1-eth1 links to P3-eth0
     add_link P1 P3
     # P2-eth1 links to P3-eth1
     add_link P2 P3
-    # P1-eth2 links to P4-eth0
+    # P1-eth2 links to P9-eth0
     add_link P1 P4
 
     echo "@@ Bridging the network"
+
     bridge_node P1 eth3 hello
+
+    bridge_node P1 eth4 grp9
+
+    bridge_node P1 eth5 grp3
 }
 

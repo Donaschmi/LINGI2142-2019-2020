@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-__author__ = "Donatien Schmitz"
-__license__ = "MIT License"
-__version__ = "1.0.1"
-__maintainer__ = "Donatien Schmitz"
-__email__ = "donatien.schmitz@student.uclouvain.be"
-__status__ = "Production"
+__author__ = 'Donatien Schmitz'
+__license__ = 'MIT License'
+__version__ = '1.0.1'
+__maintainer__ = 'Donatien Schmitz'
+__email__ = 'donatien.schmitz@student.uclouvain.be'
+__status__ = 'Production'
 
 class bcolors:
     HEADER = '\033[95m'
@@ -22,10 +22,10 @@ def print_results(succeed, failed, nbre):
         ratio = (succeed / (succeed + failed)) * 100
     except ZeroDivisionError:
         return
-    print("Ran ping test for", nbre, "routers :")
-    print("Success : " , succeed)
-    print("Fail : " , failed)
-    print("Ratio : " , ratio , "%")
+    print('Ran ping test for', nbre, 'routers :')
+    print('Success : ' , succeed)
+    print('Fail : ' , failed)
+    print('Ratio : ' , ratio , '%')
 
 def trim_from_start(text, char):
     for i in range(0, len(text)):

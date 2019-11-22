@@ -3,12 +3,12 @@ ldconfig
 
 # Assigning IP addr for ${data["loopback"]["name"]}
 ip link set dev ${data["loopback"]["name"]} up
-ip -6 addr add ${data["loopback"]["ipv6"]} dev ${data["loopback"]["name"]}
+ip -6 addr add ${data["loopback"]["ipv6"]}/128 dev ${data["loopback"]["name"]}
 
 %for inter in data["interfaces"]:
 # Assigning IP addr for ${inter["interface"]}
 ip link set dev ${inter["interface"]} up
-ip -6 addr add ${inter["ipv6"]} dev ${inter["interface"]}
+ip -6 addr add ${inter["ipv6"]}/64 dev ${inter["interface"]}
 %endfor
 
 # zebra is required to make the link between all FRRouting daemons

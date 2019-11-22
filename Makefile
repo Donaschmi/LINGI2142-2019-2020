@@ -1,19 +1,18 @@
 all: clean create
 
-create: 
+old: 
 	sudo ./create_network.sh my_topo_frrouting_conf
 
-auto-create:
-	cd scripts/
-	ls -l
-	./script.py
-	cd ..
-	sudo rm -r frrouting_cfg_auto/*
-	mv /script/tmp/* frrouting_cfg_auto/
+create:
+	./auto_config_create.sh
+	sudo ./create_network.sh my_auto_topo_conf
 
+
+connect-P0:
+	sudo ./connect_to.sh frrouting_cfg_auto/ P0
 
 connect-P1:
-	sudo ./connect_to.sh frrouting_cfg/ P1
+	sudo ./connect_to.sh frrouting_cfg_auto/ P1
 
 connect-P2:
 	sudo ./connect_to.sh frrouting_cfg/ P2

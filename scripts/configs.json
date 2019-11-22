@@ -1,71 +1,617 @@
 [
     {
+        "namemin": "p0",
+        "name": "P0",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.5",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::00"
+        },
+        "id": "0",
         "interfaces": [
             {
-                "ipv6": "fde4:8:10::11/64",
-                "name": "eth0"
+                "name": "P1",
+                "virtual": "False",
+                "interface": "P0-eth0",
+                "ipv6": "fde4:8:00:01::00",
+                "id": "1"
             },
             {
-                "ipv6": "fde4:8:11::11/64",
-                "name": "eth1"
+                "name": "P2",
+                "virtual": "False",
+                "interface": "P0-eth1",
+                "ipv6": "fde4:8:00:02::00",
+                "id": "2"
             },
             {
-                "ipv6": "fde4:8:12::11/64",
-                "name": "eth2"
+                "name": "P3",
+                "virtual": "False",
+                "interface": "P0-eth2",
+                "ipv6": "fde4:8:00:03::00",
+                "id": "3"
             },
             {
-                "ipv6": "fde4:8::11/128",
-                "name": "lo"
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P0-eth3",
+                "ipv6": "fde4:8:00:04::00",
+                "id": "4"
+            },
+            {
+                "virtual": "True",
+                "interface": "hello",
+                "ipv6": "fde4::8:cafe/48",
+                "bridge": "eth3"
             }
         ],
+        "neighbors": [
+            {
+                "external": "True",
+                "AS": "64512",
+                "next-hop": "false",
+                "interface": "hello",
+                "ipv6": "fde4::1"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::11"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::22"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::33"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::44"
+            }
+        ]
+    },
+    {
         "namemin": "p1",
-        "id": 1,
-        "name": "P1"
-    },
-    {
+        "name": "P1",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.6",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::11"
+        },
+        "id": "1",
         "interfaces": [
             {
-                "ipv6": "fde4:8:20::22/64",
-                "name": "eth0"
+                "name": "P0",
+                "virtual": "False",
+                "interface": "P1-eth0",
+                "ipv6": "fde4:8:00:01::11",
+                "id": "0"
             },
             {
-                "ipv6": "fde4:8:21::22/64",
-                "name": "eth1"
+                "name": "P2",
+                "virtual": "False",
+                "interface": "P1-eth1",
+                "ipv6": "fde4:8:00:12::11",
+                "id": "2"
             },
             {
-                "ipv6": "fde4:8:22::22/64",
-                "name": "eth2"
+                "name": "P3",
+                "virtual": "False",
+                "interface": "P1-eth2",
+                "ipv6": "fde4:8:00:13::11",
+                "id": "3"
             },
             {
-                "ipv6": "fde4:8::22/128",
-                "name": "lo"
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P1-eth3",
+                "ipv6": "fde4:8:00:14::11",
+                "id": "4"
             }
         ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::00"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::22"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::33"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::44"
+            }
+        ]
+    },
+    {
         "namemin": "p2",
-        "id": 2,
-        "name": "P2"
-    },
-    {
+        "name": "P2",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.7",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::22"
+        },
+        "id": "2",
         "interfaces": [
             {
-                "ipv6": "fde4:8:30::33/64",
-                "name": "eth0"
+                "name": "P0",
+                "virtual": "False",
+                "interface": "P2-eth0",
+                "ipv6": "fde4:8:00:02::22",
+                "id": "0"
             },
             {
-                "ipv6": "fde4:8:31::33/64",
-                "name": "eth1"
+                "name": "P1",
+                "virtual": "False",
+                "interface": "P2-eth1",
+                "ipv6": "fde4:8:00:12::22",
+                "id": "1"
             },
             {
-                "ipv6": "fde4:8:32::33/64",
-                "name": "eth2"
+                "name": "P5",
+                "virtual": "False",
+                "interface": "P2-eth2",
+                "ipv6": "fde4:8:00:25::22",
+                "id": "5"
             },
             {
-                "ipv6": "fde4:8::33/128",
-                "name": "lo"
+                "name": "P6",
+                "virtual": "False",
+                "interface": "P2-eth3",
+                "ipv6": "fde4:8:00:26::22",
+                "id": "6"
+            },
+            {
+                "name": "P9",
+                "virtual": "False",
+                "interface": "P2-eth4",
+                "ipv6": "fde4:8:00:29::22",
+                "id": "9"
             }
         ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::00"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::11"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::55"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::66"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::99"
+            }
+        ]
+    },
+    {
         "namemin": "p3",
-        "id": 3,
-        "name": "P3"
+        "name": "P3",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.8",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::33"
+        },
+        "id": "3",
+        "interfaces": [
+            {
+                "name": "P0",
+                "virtual": "False",
+                "interface": "P3-eth0",
+                "ipv6": "fde4:8:00:03::33",
+                "id": "0"
+            },
+            {
+                "name": "P1",
+                "virtual": "False",
+                "interface": "P3-eth1",
+                "ipv6": "fde4:8:00:13::33",
+                "id": "1"
+            },
+            {
+                "name": "P7",
+                "virtual": "False",
+                "interface": "P3-eth2",
+                "ipv6": "fde4:8:00:37::33",
+                "id": "7"
+            },
+            {
+                "name": "P8",
+                "virtual": "False",
+                "interface": "P3-eth3",
+                "ipv6": "fde4:8:00:38::33",
+                "id": "8"
+            },
+            {
+                "name": "P9",
+                "virtual": "False",
+                "interface": "P3-eth4",
+                "ipv6": "fde4:8:00:39::33",
+                "id": "9"
+            }
+        ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::00"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::11"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::77"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::88"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::99"
+            }
+        ]
+    },
+    {
+        "namemin": "p4",
+        "name": "P4",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.9",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::44"
+        },
+        "id": "4",
+        "interfaces": [
+            {
+                "name": "P0",
+                "virtual": "False",
+                "interface": "P4-eth0",
+                "ipv6": "fde4:8:00:04::44",
+                "id": "0"
+            },
+            {
+                "name": "P1",
+                "virtual": "False",
+                "interface": "P4-eth1",
+                "ipv6": "fde4:8:00:14::44",
+                "id": "1"
+            },
+            {
+                "name": "P5",
+                "virtual": "False",
+                "interface": "P4-eth2",
+                "ipv6": "fde4:8:00:45::44",
+                "id": "5"
+            },
+            {
+                "name": "P6",
+                "virtual": "False",
+                "interface": "P4-eth3",
+                "ipv6": "fde4:8:00:46::44",
+                "id": "6"
+            },
+            {
+                "name": "P7",
+                "virtual": "False",
+                "interface": "P4-eth4",
+                "ipv6": "fde4:8:00:47::44",
+                "id": "7"
+            },
+            {
+                "name": "P8",
+                "virtual": "False",
+                "interface": "P4-eth5",
+                "ipv6": "fde4:8:00:48::44",
+                "id": "8"
+            }
+        ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::00"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::11"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::55"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::66"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::77"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::88"
+            }
+        ]
+    },
+    {
+        "namemin": "p5",
+        "name": "P5",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.10",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::55"
+        },
+        "id": "5",
+        "interfaces": [
+            {
+                "name": "P2",
+                "virtual": "False",
+                "interface": "P5-eth0",
+                "ipv6": "fde4:8:00:25::55",
+                "id": "2"
+            },
+            {
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P5-eth1",
+                "ipv6": "fde4:8:00:45::55",
+                "id": "4"
+            }
+        ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::22"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::44"
+            }
+        ]
+    },
+    {
+        "namemin": "p6",
+        "name": "P6",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.11",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::66"
+        },
+        "id": "6",
+        "interfaces": [
+            {
+                "name": "P2",
+                "virtual": "False",
+                "interface": "P6-eth0",
+                "ipv6": "fde4:8:00:26::66",
+                "id": "2"
+            },
+            {
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P6-eth1",
+                "ipv6": "fde4:8:00:46::66",
+                "id": "4"
+            }
+        ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::22"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::44"
+            }
+        ]
+    },
+    {
+        "namemin": "p7",
+        "name": "P7",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.12",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::77"
+        },
+        "id": "7",
+        "interfaces": [
+            {
+                "name": "P3",
+                "virtual": "False",
+                "interface": "P7-eth0",
+                "ipv6": "fde4:8:00:37::77",
+                "id": "3"
+            },
+            {
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P7-eth1",
+                "ipv6": "fde4:8:00:47::77",
+                "id": "4"
+            }
+        ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::33"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::44"
+            }
+        ]
+    },
+    {
+        "namemin": "p8",
+        "name": "P8",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.13",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::88"
+        },
+        "id": "8",
+        "interfaces": [
+            {
+                "name": "P3",
+                "virtual": "False",
+                "interface": "P8-eth0",
+                "ipv6": "fde4:8:00:38::88",
+                "id": "3"
+            },
+            {
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P8-eth1",
+                "ipv6": "fde4:8:00:48::88",
+                "id": "4"
+            }
+        ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::33"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::44"
+            }
+        ]
+    },
+    {
+        "namemin": "p9",
+        "name": "P9",
+        "area": "0.0.0.0",
+        "router-id": "100.251.23.14",
+        "AS": "65008",
+        "loopback": {
+            "name": "lo",
+            "ipv6": "fde4:8:00::99"
+        },
+        "id": "9",
+        "interfaces": [
+            {
+                "name": "P2",
+                "virtual": "False",
+                "interface": "P9-eth0",
+                "ipv6": "fde4:8:00:29::99",
+                "id": "2"
+            },
+            {
+                "name": "P3",
+                "virtual": "False",
+                "interface": "P9-eth1",
+                "ipv6": "fde4:8:00:39::99",
+                "id": "3"
+            }
+        ],
+        "neighbors": [
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::22"
+            },
+            {
+                "external": "False",
+                "AS": "65008",
+                "next-hop": "false",
+                "ipv6": "fde4:8:00::33"
+            }
+        ]
     }
 ]

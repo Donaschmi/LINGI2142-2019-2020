@@ -9,11 +9,11 @@ enable password zebra
 ! Interface's description.
 !
 interface ${data["loopback"]["name"]}
-description loopback.
+    description loopback.
 !
 %for inter in data["interfaces"]:
+%if inter["virtual"]=="False":
 interface ${inter["interface"]}
-%if inter["virtual"]==False:
 description Link to ${inter["name"]}
 %endif
 !
