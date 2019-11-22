@@ -13,4 +13,7 @@ ip -6 addr add fde4:8:14::44/64 dev P4-eth0
 # and the linux kernel routing table
 LD_LIBRARY_PATH=/usr/local/lib /usr/lib/frr/zebra -A 127.0.0.1 -f /etc/zebra.conf -z /tmp/p4.api -i /tmp/p4_zebra.pid &
 # launching FRRouting OSPF daemon
-LD_LIBRARY_PATH=/usr/local/lib /usr/lib/frr/ospf6d -f /etc/p4_ospf.conf -z /tmp/p4.api -i /tmp/p4_ospf6d.pid -A 127.0.0.1
+LD_LIBRARY_PATH=/usr/local/lib /usr/lib/frr/ospf6d -f /etc/p4_ospf.conf -z /tmp/p4.api -i /tmp/p4_ospf6d.pid -A 127.0.0.1 &
+
+# launching FRRouting BGP daemon
+LD_LIBRARY_PATH=/usr/local/lib /usr/lib/frr/bgpd -f /etc/p4_bgpd.conf -z /tmp/p4.api -i /tmp/p4_bgpd.pid -A 127.0.0.1 &

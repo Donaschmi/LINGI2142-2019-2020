@@ -29,7 +29,6 @@ ip -6 addr add fde4:8::beef/64 dev grp9
 ip link set dev grp3 up
 ip -6 addr add fde4:a8::bad/64 dev grp3
 
-
 # zebra is required to make the link between all FRRouting daemons
 # and the linux kernel routing table
 LD_LIBRARY_PATH=/usr/local/lib /usr/lib/frr/zebra -A 127.0.0.1 -f /etc/zebra.conf -z /tmp/p1.api -i /tmp/p1_zebra.pid &
