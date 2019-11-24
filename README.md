@@ -19,9 +19,9 @@ Projet
 
 ## Intradomain Routing Protocol 
 
-###eBGP
+### eBGP
 
-###iBGP
+### iBGP
 
 
 ## Creative phase
