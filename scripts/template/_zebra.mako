@@ -14,7 +14,7 @@ interface ${data["loopback"]["name"]}
 %for inter in data["interfaces"]:
 %if inter["virtual"]=="False":
 interface ${inter["interface"]}
-description Link to ${inter["name"]}
+    description Link to ${inter["name"]}
 %endif
 !
 %endfor

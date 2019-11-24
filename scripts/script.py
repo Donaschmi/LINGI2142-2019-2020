@@ -150,7 +150,7 @@ def create_files():
     for conf in data:
         directory = TMPDIR+"routers/"+conf['name']+'/'
         os.makedirs(directory, exist_ok=True)
-        with open(directory+conf['namemin']+'_ld.so.conf', 'w+') as f:
+        with open(directory+'ld.so.conf', 'w+') as f:
             f.write(template_ldso.render(data=conf))
         with open(directory+conf['namemin']+'_zebra.conf', 'w+' ) as f:
             f.write(template_zebra.render(data=conf))

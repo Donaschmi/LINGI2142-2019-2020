@@ -3,7 +3,7 @@
 # Group number
 GROUPNUMBER=8
 # Node configs
-CONFIGDIR=frrouting_cfg_auto
+CONFIGDIR=frrouting_cfg
 # boot script name
 BOOT="boot"
 # startup script name
