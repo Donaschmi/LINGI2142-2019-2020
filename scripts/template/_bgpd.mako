@@ -19,12 +19,15 @@ neighbor ${neigh["ipv6"]} interface ${neigh["interface"]}
 address-family ipv6 unicast
 
 %for neigh in data["neighbors"]:
-neighbor ${neigh["ipv6"]} activate
+ neighbor ${neigh["ipv6"]} activate
+%endfor
+%for neigh in data["neighbors"]:
 %if neigh["external"]==False:
-neighbor ${neigh["ipv6"]} next-hop-self
+ neighbor ${neigh["ipv6"]} next-hop-self
 %endif
-
-neighbor ${neigh["ipv6"]} update-source ${data["loopback"]["ipv6"]}
+%endfor
+%for neigh in data["neighbors"]:
+ neighbor ${neigh["ipv6"]} update-source ${data["loopback"]["ipv6"]}
 %endfor
 
 exit-address-family

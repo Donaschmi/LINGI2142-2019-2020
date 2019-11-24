@@ -23,7 +23,7 @@ interface ${inter["interface"]}
 !
 %endfor
 router ospf6
-    ospf6 router-id 100.251.23.${data["id"]}
+    ospf6 router-id ${data["router-id"]}
 %for inter in data["interfaces"]:
 %if inter["virtual"]=="False":
     interface ${inter["interface"]} area ${data["area"]}

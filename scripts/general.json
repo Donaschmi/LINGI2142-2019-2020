@@ -1,0 +1,11 @@
+{
+    "groupnumber": 8,
+    "prefixbase": 32,
+    "boot": "boot",
+    "start": "start",
+    "configdir": "frrouting",
+    "prefixlen": 32,
+    "routerfile": "router.csv",
+    "ospffile": "ospf.csv",
+    "bgpdfile": "bgpd.csv"
+}
