@@ -18,6 +18,7 @@ def main(network):
 
     print('Beginning OSPF test')
     ospf_test = test_ospf(network)
+    #ospf_test = 0
     print('OSPF test completed \n')
     if ospf_test:
         print(bcolors.OKGREEN + 'OSPF test succeed' + bcolors.ENDC)
@@ -25,6 +26,7 @@ def main(network):
         print(bcolors.FAIL + 'OSPF test failed' + bcolors.ENDC)
 
     print('Beginning eBGP test')
+    #ebgp_test = 0
     ebgp_test = test_ping_google(network)
     print('eBGP test completed \n')
     if ebgp_test:
@@ -62,13 +64,11 @@ def test_ping_google(network):
     for r in network.routers:
         router = network.routers[r]
         r_name = router.name
-        print('Connecting to '+ r_name)
         child = pexpect.spawn('sudo ../connect_to.sh ' + network.topo + ' ' + r_name)
 
         child.sendline('ping6 2001:4860:4860::8888 -c 1')
         idx = child.expect(['0% packet loss', r'\d+% packet loss', 'connect: Network is unreachable'])
         if idx == 0:
-            print(r_name + ' - Ping of Google successfull')
             succeed += 1
         else:
             print(r_name + ' - Ping of Google failed')
@@ -93,7 +93,6 @@ def test_ospf(network):
     for r in network.routers:
         router = network.routers[r]
         r_name = router.name
-        print('Connecting to '+ r_name)
         child = pexpect.spawn('sudo ../connect_to.sh ' + network.topo + ' ' + r_name)
         child.expect('bash-4.3#')
         for n in network.routers:
@@ -103,7 +102,6 @@ def test_ospf(network):
             child.sendline('ping6 ' + neigh.lo + ' -c 1')
             idx = child.expect(['0% packet loss', r'\d+% packet loss', 'connect: Network is unreachable'], timeout=5)
             if idx == 0:
-                print(r_name + ' - Success pinging ' + neigh.name)
                 succeed += 1
             else:
                 print(r_name + ' - Fail pinging ' + neigh.name)
@@ -131,7 +129,6 @@ def test_bgp_neigh(network):
     for r in network.routers:
         router = network.routers[r]
         r_name = router.name
-        print('Connecting to '+ r_name)
         child = pexpect.spawn('sudo ../connect_to.sh ' + network.topo + ' ' + r_name)
         child.expect('bash-4.3#')
         child.sendline('LD_LIBRARY_PATH=/usr/local/lib vtysh')
@@ -151,13 +148,14 @@ def test_bgp_neigh(network):
         output = trim_from_start(output, '{')
         routes = json.loads(output)['routes']
         # Should have eBGP connections with AS9, AS10 and
-        for i in range(10):
+        for i in range(1,10):
             if i == 8:
                 continue
             full_addr = addr + str(i) + prefix
-            if full_addr in route:
+            if full_addr in routes:
                 succeed += 1
             else:
+                print('Cannot find AS', full_addr,'in bgp neighbors for router', r_name)
                 failed += 1
 
     print_results(succeed, failed, str(len(network.routers)))
