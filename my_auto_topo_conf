@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Group number
+GROUPNUMBER=8
+# Node configs
+CONFIGDIR=frrouting_cfg
+# boot script name
+BOOT="boot"
+# startup script name
+STARTUP="start"
+PREFIXBASE="fde4:8"
+PREFIXLEN=32
+# You can reuse the above two to generate ip addresses/routes, ...
+
+# This function describes the network topology that we want to emulate
+function mk_topo {
+    echo "@@ Adding links and nodes"
+
+    # P1 links to P2
+    add_link P1 P2
+    # P1 links to P3
+    add_link P1 P3
+    # P1 links to P4
+    add_link P1 P4
+    # P1 links to P5
+    add_link P1 P5
+    # P2 links to P3
+    add_link P2 P3
+    # P2 links to P4
+    add_link P2 P4
+    # P2 links to P5
+    add_link P2 P5
+    # P3 links to P6
+    add_link P3 P6
+    # P3 links to P7
+    add_link P3 P7
+    # P4 links to P8
+    add_link P4 P8
+    # P4 links to P9
+    add_link P4 P9
+    # P5 links to P6
+    add_link P5 P6
+    # P5 links to P7
+    add_link P5 P7
+    # P5 links to P8
+    add_link P5 P8
+    # P5 links to P9
+    add_link P5 P9
+    # P10 links to P3
+    add_link P10 P3
+    # P10 links to P4
+    add_link P10 P4
+
+    echo "@@Adding bridges nodes"
+
+    bridge_node P1 eth4 hello
+
+    bridge_node P1 eth5 grp9
+
+    bridge_node P2 eth6 grp7
+
+    bridge_node P2 eth7 grp4
+
+}
+

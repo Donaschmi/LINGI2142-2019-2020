@@ -1,0 +1,7 @@
+id,type,param1,param2,param3
+1,BLACKHOLE,fde4:8:ffff::,none,none
+2,BLACKHOLE,fde4:8:ffff::,none,none
+1,COMMUNITY,GARBAGE,90/1,none
+1,COMMUNITY,CUSTOMER,90/1,none
+1,COMMUNITY,PROVIDER,90/1,none
+1,COMMUNITY,SHAREDCOST,90/1,none

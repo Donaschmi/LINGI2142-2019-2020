@@ -1,0 +1,107 @@
+Time : Mon Nov 25 13:45:02 GMT 2019
+Network created, beginning tests.
+Beginning OSPF test
+P7 - Fail pinging P6
+P8 - Fail pinging P10
+P1 - Fail pinging P10
+P10 - Fail pinging P7
+P10 - Fail pinging P6
+P10 - Fail pinging P8
+P9 - Fail pinging P8
+P9 - Fail pinging P10
+P2 - Fail pinging P7
+P2 - Fail pinging P6
+P2 - Fail pinging P8
+Ran ping test for 10 routers :
+Success :  79
+Fail :  11
+Ratio :  87.77777777777777 %
+OSPF test completed 
+
+[91mOSPF test failed[0m
+Beginning eBGP test
+P7 - Ping of Google failed
+P6 - Ping of Google failed
+P8 - Ping of Google failed
+P5 - Ping of Google failed
+P3 - Ping of Google failed
+P1 - Ping of Google failed
+Time : Mon Nov 25 13:48:52 GMT 2019
+Network created, beginning tests.
+Beginning OSPF test
+P1 - Fail pinging P10
+P7 - Fail pinging P6
+P9 - Fail pinging P8
+P9 - Fail pinging P10
+P8 - Fail pinging P10
+P10 - Fail pinging P6
+P10 - Fail pinging P7
+P10 - Fail pinging P8
+P2 - Fail pinging P6
+P2 - Fail pinging P7
+P2 - Fail pinging P8
+Ran ping test for 10 routers :
+Success :  79
+Fail :  11
+Ratio :  87.77777777777777 %
+OSPF test completed 
+
+[91mOSPF test failed[0m
+Beginning eBGP test
+P6 - Ping of Google failed
+P4 - Ping of Google failed
+P3 - Ping of Google failed
+P1 - Ping of Google failed
+P7 - Ping of Google failed
+P5 - Ping of Google failed
+P9 - Ping of Google failed
+P8 - Ping of Google failed
+P10 - Ping of Google failed
+P2 - Ping of Google failed
+Ran ping test for 10 routers :
+Success :  0
+Fail :  10
+Ratio :  0.0 %
+eBGP test completed 
+
+[91meBGP test failed[0m
+Beginning BGP neighbours test (should be neighbour with 65004 65009 65010)
+Cannot find AS fde4:0::/32 in bgp neighbors for router P6
+Cannot find AS fde4:2::/32 in bgp neighbors for router P6
+Cannot find AS fde4:5::/32 in bgp neighbors for router P6
+Cannot find AS fde4:0::/32 in bgp neighbors for router P4
+Cannot find AS fde4:2::/32 in bgp neighbors for router P4
+Cannot find AS fde4:5::/32 in bgp neighbors for router P4
+Cannot find AS fde4:0::/32 in bgp neighbors for router P3
+Cannot find AS fde4:2::/32 in bgp neighbors for router P3
+Cannot find AS fde4:5::/32 in bgp neighbors for router P3
+Cannot find AS fde4:0::/32 in bgp neighbors for router P1
+Cannot find AS fde4:2::/32 in bgp neighbors for router P1
+Cannot find AS fde4:5::/32 in bgp neighbors for router P1
+Cannot find AS fde4:0::/32 in bgp neighbors for router P7
+Cannot find AS fde4:2::/32 in bgp neighbors for router P7
+Cannot find AS fde4:5::/32 in bgp neighbors for router P7
+Cannot find AS fde4:0::/32 in bgp neighbors for router P5
+Cannot find AS fde4:2::/32 in bgp neighbors for router P5
+Cannot find AS fde4:5::/32 in bgp neighbors for router P5
+Cannot find AS fde4:0::/32 in bgp neighbors for router P9
+Cannot find AS fde4:2::/32 in bgp neighbors for router P9
+Cannot find AS fde4:5::/32 in bgp neighbors for router P9
+Cannot find AS fde4:0::/32 in bgp neighbors for router P8
+Cannot find AS fde4:2::/32 in bgp neighbors for router P8
+Cannot find AS fde4:5::/32 in bgp neighbors for router P8
+Cannot find AS fde4:0::/32 in bgp neighbors for router P10
+Cannot find AS fde4:2::/32 in bgp neighbors for router P10
+Cannot find AS fde4:5::/32 in bgp neighbors for router P10
+Cannot find AS fde4:0::/32 in bgp neighbors for router P2
+Cannot find AS fde4:2::/32 in bgp neighbors for router P2
+Cannot find AS fde4:5::/32 in bgp neighbors for router P2
+Ran ping test for 10 routers :
+Success :  60
+Fail :  30
+Ratio :  66.66666666666666 %
+BGP neighborhood test completed 
+
+[91mBGP neighborhood test failed[0m
+End of tests
+[91mAt least one test failed : Network not operationnal[0m
