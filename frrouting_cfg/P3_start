@@ -3,23 +3,23 @@ ldconfig
 
 # Assigning IP addr for lo
 ip link set dev lo up
-ip -6 addr add fde4:8:00::33/128 dev lo
+ip -6 addr add fde4:8::3/128 dev lo
 
 # Assigning IP addr for P3-eth0
 ip link set dev P3-eth0 up
-ip -6 addr add fde4:8:00:03::33/64 dev P3-eth0
+ip -6 addr add fde4:8:00:13::3/64 dev P3-eth0
 # Assigning IP addr for P3-eth1
 ip link set dev P3-eth1 up
-ip -6 addr add fde4:8:00:13::33/64 dev P3-eth1
+ip -6 addr add fde4:8:00:23::3/64 dev P3-eth1
 # Assigning IP addr for P3-eth2
 ip link set dev P3-eth2 up
-ip -6 addr add fde4:8:00:37::33/64 dev P3-eth2
+ip -6 addr add fde4:8:00:36::3/64 dev P3-eth2
 # Assigning IP addr for P3-eth3
 ip link set dev P3-eth3 up
-ip -6 addr add fde4:8:00:38::33/64 dev P3-eth3
+ip -6 addr add fde4:8:00:37::3/64 dev P3-eth3
 # Assigning IP addr for P3-eth4
 ip link set dev P3-eth4 up
-ip -6 addr add fde4:8:00:39::33/64 dev P3-eth4
+ip -6 addr add fde4:8:00:3a::3/64 dev P3-eth4
 
 # zebra is required to make the link between all FRRouting daemons
 # and the linux kernel routing table

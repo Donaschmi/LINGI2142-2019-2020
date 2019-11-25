@@ -24,11 +24,13 @@ AS = 65000 + GROUP
 routers_csv = []
 bgpd_csv = []
 ospf_csv = []
+policies_csv = []
 
 def read_csv():
     global routers_csv
     global bgpd_csv
     global ospf_csv
+    global policies_csv
 
     with open('routers.csv') as f:
         routers_csv = [{k: str(v) for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
@@ -41,6 +43,8 @@ def read_csv():
     with open('ospf.csv') as f:
         ospf_csv = [{k: str(v) for k, v in row.items()} for row in csv.DictReader(f,       skipinitialspace=True)]
 
+    with open('policies.csv') as f:
+        policies_csv = [{k: str(v) for k, v in row.items()} for row in csv.DictReader(f,       skipinitialspace=True)]
 
 def json_csv_configs():
     routers = []
@@ -53,6 +57,7 @@ def json_csv_configs():
         router["router-id"] = r["router-id"]
         router["area"] = r["area"]
         router["AS"] = str(AS)
+        router["next-hop"] = r["next-hop"]
 
         loopback = {}
         router["loopback"] = loopback
@@ -110,7 +115,9 @@ def json_csv_configs():
                 neighbor["AS"] = link["as2"]
                 neighbor["ipv6"] = link["addr2"]
                 neighbor["interface"] = link["interface"]
-                neighbor["next-hop"] = link["next-hop"]
+                neighbor["rr"] = "False"
+                neighbor["password"] = link["password"]
+                neighbor["relation"] = link["relation"]
 
             #iBGP
             elif ( flag and link["external"] == "no" ):
@@ -119,8 +126,29 @@ def json_csv_configs():
                 neighbor["external"] = "False"
                 neighbor["AS"] = router["AS"]
                 neighbor["ipv6"] = [r["lo"] for r in routers_csv if r["id"] == link[other]][0]
-                neighbor["next-hop"] = link["next-hop"]
+                if ( link["rr"] == "True" and link["id1"] == router["id"]):
+                    neighbor["rr"] = "True"
+                else:
+                    neighbor["rr"] = "False"
+                neighbor["password"] = link["password"]
 
+        policies = []
+        router["policies"] = policies
+        for p in policies_csv:
+            if p["id"] == router["id"]:
+                #BLACKHOLE
+                if p["type"] == "BLACKHOLE":
+                    policy = {}
+                    policies.append(policy)
+                    policy["type"] = p["type"]
+                    policy["ipv6"] = p["param1"]
+                #COMMUNITY
+                if p["type"] == "COMMUNITY":
+                    policy = {}
+                    policies.append(policy)
+                    policy["type"] = p["type"]
+                    policy["link"] = p["param1"]
+                    policy["localpref"] = p["param2"]
 
     #print(routers)
     with open(CONFIGS, 'w+') as f:

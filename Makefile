@@ -7,6 +7,8 @@ create:
 	./auto_config_create.sh
 	sudo ./create_network.sh my_auto_topo_conf
 
+last:
+	sudo ./create_network.sh my_auto_topo_conf
 
 connect-P0:
 	sudo ./connect_to.sh frrouting_cfg/ P0

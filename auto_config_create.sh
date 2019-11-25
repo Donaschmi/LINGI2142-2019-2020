@@ -12,3 +12,4 @@ cd ../../../
 cp scripts/tmp/my_auto_conf my_auto_topo_conf
 cp -r scripts/tmp/routers/* frrouting_cfg/
 
+sudo rm -rf scripts/tmp
