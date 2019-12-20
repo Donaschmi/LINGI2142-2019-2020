@@ -99,7 +99,6 @@ def json_csv_configs():
                 flag = True
                 strid = "id2"
                 other = "id1"
-
             #eBGP
             if (flag and link["external"] == "yes" ):
                 interface = {}
@@ -117,8 +116,18 @@ def json_csv_configs():
                 neighbor["interface"] = link["interface"]
                 neighbor["rr"] = "False"
                 neighbor["password"] = link["password"]
-                neighbor["relation"] = link["relation"]
-
+                if ( strid == "id1" ):
+                    neighbor["send-community"] = link["send-community1"]
+                else:
+                    eighbor["send-community"] = link["send-community2"]
+            if link["route-map-in"] != "none":
+                neighbor["route-map-in"] = link["route-map-in"]
+            if link["route-map-out"] != "none":
+                neighbor["route-map-out"] = link["route-map-out"]
+            if link["prefix-list-in"] != "none":
+                neighbor["prefix-list-in"] = link["prefix-list-in"]
+            if link["prefix-list-out"] != "none":
+                neighbor["prefix-list-out"] = link["prefix-list-out"]
             #iBGP
             elif ( flag and link["external"] == "no" ):
                 neighbor = {}
@@ -135,20 +144,42 @@ def json_csv_configs():
         policies = []
         router["policies"] = policies
         for p in policies_csv:
-            if p["id"] == router["id"]:
-                #BLACKHOLE
-                if p["type"] == "BLACKHOLE":
-                    policy = {}
-                    policies.append(policy)
-                    policy["type"] = p["type"]
-                    policy["ipv6"] = p["param1"]
-                #COMMUNITY
-                if p["type"] == "COMMUNITY":
-                    policy = {}
-                    policies.append(policy)
-                    policy["type"] = p["type"]
-                    policy["link"] = p["param1"]
-                    policy["localpref"] = p["param2"]
+            list_routers = p["routers"].replace("[","").replace("]","").split(";")
+            for p_id in list_routers:
+                if p_id == router["id"]:
+                    #COMMUNITY
+                    if p["name"] == "COMMUNITY-LIST":
+                        policy = {}
+                        policies.append(policy)
+                        policy["type"] = p["name"]
+                        policy["setting"] = p["param1"]
+                        policy["name"] = p["param2"]
+                        policy["value"] = p["param3"]
+                    #EXPORT-FILTER
+                    if p["name"] == "EXPORT-FILTER":
+                        policy = {}
+                        policies.append(policy)
+                        policy["type"] = p["name"]
+                        policy["name"] = p["param1"]
+                        policy["ipv6"] = p["param2"]
+                    #ROUTE-MAP
+                    if p["name"] == "ROUTE-MAP":
+                        policy = {}
+                        policies.append(policy)
+                        policy["type"] = p["name"]
+                        policy["name"] = p["param1"]
+                        if p["param2"] != "none":
+                            policy["first"] = p["param2"]
+                        if p["param3"] != "none":
+                            policy["second"] = p["param3"]
+                        if p["param4"] != "none":
+                            policy["third"] = p["param4"]
+                        if p["param5"] != "none":
+                            list_policy = p["param5"].replace("[","").replace("]","").split(";")
+                            policy["first_pol"] = list_policy
+                        if p["param6"] != "none":
+                            list_policy = p["param6"].replace("[","").replace("]","").split(";")
+                            policy["second_pol"] = list_policy
 
     #print(routers)
     with open(CONFIGS, 'w+') as f:
