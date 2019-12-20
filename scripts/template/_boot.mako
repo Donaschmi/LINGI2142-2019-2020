@@ -18,7 +18,7 @@ ip6tables -A INPUT -p icmpv6 --icmpv6-type parameter-problem -j ACCEPT
 ip6tables -A INPUT -p icmpv6 --icmpv6-type echo-request -m limit --limit 5/min -j ACCEPT
 ip6tables -A INPUT -p icmpv6 --icmpv6-type echo-reply -m limit --limit 5/min -j ACCEPT
 
-# On autorise les autres types ICMPv6 mais seulement ceux avec un Hop Limit de 255, ce qui assure
+# On autorise d'autres types ICMPv6 mais seulement ceux avec un Hop Limit de 255, ce qui assure
 # que le message vient d'un de nos routeurs (sinon la valeur 255 aurait etee decrementee).
 ip6tables -A INPUT -p icmpv6 --icmpv6-type router-advertisement -m hl --hl-eq 255 -j ACCEPT
 ip6tables -A INPUT -p icmpv6 --icmpv6-type neighbor-solicitation -m hl --hl-eq 255 -j ACCEPT
@@ -32,12 +32,12 @@ ip6tables -A INPUT -p icmpv6 -j DROP
 #FILTRES POUR UDP, TCP,esp
 #On accepte les protocoles tcp, udp et esp avec un ratio de 5 paquets
 #max par minute et venant seulement des adresses fe80::/16 et fde4::/16
-ip6tables -A INPUT -p tcp -m limit --limit 30/min -s fe80::/16 -j ACCEPT
-ip6tables -A INPUT -p udp -m limit --limit 30/min -s fe80::/16 -j ACCEPT
-ip6tables -A INPUT -p esp -m limit --limit 30/min -s fe80::/16 -j ACCEPT
-ip6tables -A INPUT -p tcp -m limit --limit 30/min -s fde4::/16 -j ACCEPT
-ip6tables -A INPUT -p udp -m limit --limit 30/min -s fde4::/16 -j ACCEPT
-ip6tables -A INPUT -p esp -m limit --limit 30/min -s fde4::/16 -j ACCEPT
+ip6tables -A INPUT -p tcp -m limit --limit 5/min -s fe80::/16 -j ACCEPT
+ip6tables -A INPUT -p udp -m limit --limit 5/min -s fe80::/16 -j ACCEPT
+ip6tables -A INPUT -p esp -m limit --limit 5/min -s fe80::/16 -j ACCEPT
+ip6tables -A INPUT -p tcp -m limit --limit 5/min -s fde4::/16 -j ACCEPT
+ip6tables -A INPUT -p udp -m limit --limit 5/min -s fde4::/16 -j ACCEPT
+ip6tables -A INPUT -p esp -m limit --limit 5/min -s fde4::/16 -j ACCEPT
 
 
 #On accepte les paquets des autres protocoles comme OSPF, sans limite de paquets

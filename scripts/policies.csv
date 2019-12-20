@@ -10,5 +10,7 @@ routers,name,param1,param2,param3,param4,param5,param6
 [99],EXPORT-FILTER,client-65009,fde4:4::/32,none,none
 [99],EXPORT-FILTER,shared-cost-65004,fde4:8::/32,none,none
 [99],EXPORT-FILTER,shared-cost-65004,fde4:9::/32,none,none
-[1;2],ROUTE-MAP,garbage,5,10,none,[set ip next-hop::1],none
-[1;2],ROUTE-MAP,customer,5,10,20,[set ip next-hop::1;call garbage],[set ip next-hop::1]
+[1;2],ROUTE-MAP,garbage,5,10,none,[set ip next-hop::1;set local-preference 5],none
+[1;2],ROUTE-MAP,customer,5,10,[match community garbage;call garbage],[set local-preference 50],none
+[1;2],ROUTE-MAP,provider,5,10,none,[set local-preference 20],none
+[1;2],ROUTE-MAP,shared-cost,5,10,none,[set local-preference 30],none
