@@ -94,6 +94,6 @@ route-map ${policy["name"]} permit ${policy["third"]}
 %               endif
 %       endif
 %   endif
-%endif
 !
+%endif
 %endfor

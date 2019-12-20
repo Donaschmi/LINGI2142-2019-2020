@@ -178,8 +178,8 @@ def json_csv_configs():
                             list_policy = p["param5"].replace("[","").replace("]","").split(";")
                             policy["first_pol"] = list_policy
                         if p["param6"] != "none":
-                            list_policy = p["param6"].replace("[","").replace("]","").split(";")
-                            policy["second_pol"] = list_policy
+                            list_policy2 = p["param6"].replace("[","").replace("]","").split(";")
+                            policy["second_pol"] = list_policy2
 
     #print(routers)
     with open(CONFIGS, 'w+') as f:

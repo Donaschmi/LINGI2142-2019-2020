@@ -1,885 +1,911 @@
 [
     {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::1"
-        },
-        "name": "P1",
-        "neighbors": [
-            {
-                "route-map-in": "back-up",
-                "AS": "64512",
-                "send-community": "true",
-                "prefix-list-in": "back-up-64512",
-                "interface": "hello",
-                "ipv6": "fde4::1",
-                "password": "none",
-                "external": "True",
-                "rr": "False"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65009",
-                "send-community": "true",
-                "prefix-list-in": "shared-cost-65004",
-                "interface": "grp9",
-                "ipv6": "fde4:9::8:caf9",
-                "password": "NETWORK0809",
-                "external": "True",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::2",
-                "password": "IBGP12",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::3",
-                "password": "IBGP13",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::4",
-                "password": "IBGP14",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "route-map-in": "client",
-                "AS": "65008",
-                "prefix-list-in": "client-65009",
-                "ipv6": "fde4:8::5",
-                "password": "IBGP15",
-                "external": "False",
-                "rr": "True"
-            }
-        ],
-        "namemin": "p1",
         "id": "1",
-        "AS": "65008",
-        "router-id": "100.251.23.5",
         "policies": [
             {
                 "name": "GARBAGE",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "64512:1000"
             },
             {
                 "name": "CUSTOMER",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "65009:1001 "
             },
             {
                 "name": "PROVIDER",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "65007:1002"
             },
             {
                 "name": "SHAREDCOST",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "65004:1003"
             },
             {
                 "name": "BACKUP",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "64512:1004"
             },
             {
                 "name": "back-up-64512",
-                "ipv6": "fde4::/32",
-                "type": "EXPORT-FILTER"
+                "type": "EXPORT-FILTER",
+                "ipv6": "fde4::/32"
             },
             {
                 "name": "garbage",
                 "second": "10",
                 "type": "ROUTE-MAP",
-                "first": "5",
                 "first_pol": [
                     "set ip next-hop::1",
                     "set local-preference 5"
-                ]
+                ],
+                "first": "5"
             },
             {
-                "name": "customer",
-                "first_pol": [
+                "type": "ROUTE-MAP",
+                "second_pol": [
                     "set local-preference 50"
                 ],
+                "third": "20",
+                "first_pol": [
+                    "match community garbage",
+                    "call garbage"
+                ],
                 "second": "10",
-                "type": "ROUTE-MAP",
-                "first": "5",
-                "third": "[match community garbage;call garbage]"
+                "name": "customer",
+                "first": "5"
             },
             {
                 "name": "provider",
                 "second": "10",
                 "type": "ROUTE-MAP",
-                "first": "5",
                 "first_pol": [
                     "set local-preference 20"
-                ]
+                ],
+                "first": "5"
+            },
+            {
+                "name": "backup",
+                "second": "10",
+                "type": "ROUTE-MAP",
+                "first_pol": [
+                    "set local-preference 20"
+                ],
+                "first": "5"
             },
             {
                 "name": "shared-cost",
                 "second": "10",
                 "type": "ROUTE-MAP",
-                "first": "5",
                 "first_pol": [
                     "set local-preference 30"
-                ]
+                ],
+                "first": "5"
             }
         ],
         "next-hop": "True",
-        "area": "0.0.0.0",
+        "AS": "65008",
+        "namemin": "p1",
         "interfaces": [
             {
-                "name": "P2",
+                "id": "2",
                 "ipv6": "fde4:8:00:0102::1",
+                "name": "P2",
                 "virtual": "False",
-                "interface": "P1-eth0",
-                "id": "2"
+                "interface": "P1-eth0"
             },
             {
-                "name": "P3",
+                "id": "3",
                 "ipv6": "fde4:8:00:0103::1",
+                "name": "P3",
                 "virtual": "False",
-                "interface": "P1-eth1",
-                "id": "3"
+                "interface": "P1-eth1"
             },
             {
-                "name": "P4",
+                "id": "4",
                 "ipv6": "fde4:8:00:0104::1",
+                "name": "P4",
                 "virtual": "False",
-                "interface": "P1-eth2",
-                "id": "4"
+                "interface": "P1-eth2"
             },
             {
-                "name": "P5",
+                "id": "5",
                 "ipv6": "fde4:8:00:0105::1",
+                "name": "P5",
                 "virtual": "False",
-                "interface": "P1-eth3",
-                "id": "5"
+                "interface": "P1-eth3"
             },
             {
                 "ipv6": "fde4::8:cafe",
+                "bridge": "eth4",
                 "virtual": "True",
-                "interface": "hello",
-                "bridge": "eth4"
+                "interface": "hello"
             },
             {
                 "ipv6": "fde4:9::8:beef",
+                "bridge": "eth5",
                 "virtual": "True",
-                "interface": "grp9",
-                "bridge": "eth5"
+                "interface": "grp9"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::1",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.5",
+        "name": "P1",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "prefix-list-in": "back-up-64512",
+                "ipv6": "fde4::1",
+                "external": "True",
+                "AS": "64512",
+                "send-community": "true",
+                "password": "none",
+                "route-map-in": "back-up",
+                "rr": "False",
+                "interface": "hello"
+            },
+            {
+                "prefix-list-in": "shared-cost-65004",
+                "ipv6": "fde4:9::8:caf9",
+                "external": "True",
+                "AS": "65009",
+                "send-community": "true",
+                "password": "NETWORK0809",
+                "route-map-in": "shared-cost",
+                "rr": "False",
+                "interface": "grp9"
+            },
+            {
+                "ipv6": "fde4:8::2",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP12"
+            },
+            {
+                "ipv6": "fde4:8::3",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP13"
+            },
+            {
+                "ipv6": "fde4:8::4",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP14"
+            },
+            {
+                "prefix-list-in": "client-65009",
+                "ipv6": "fde4:8::5",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP15",
+                "route-map-in": "client",
+                "rr": "True"
             }
         ]
     },
     {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::2"
-        },
-        "name": "P2",
-        "neighbors": [
-            {
-                "route-map-in": "provider",
-                "AS": "65007",
-                "send-community": "true",
-                "prefix-list-in": "provider-65007",
-                "interface": "grp7",
-                "ipv6": "fde4:8:a007::beef",
-                "password": "NETWORK0708",
-                "external": "True",
-                "rr": "False"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65004",
-                "send-community": "true",
-                "prefix-list-in": "shared-cost-65004",
-                "interface": "grp4",
-                "ipv6": "fde4:8:b004::beef",
-                "password": "NETWORK0408",
-                "external": "True",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::1",
-                "password": "IBGP12",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::3",
-                "password": "IBGP23",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::4",
-                "password": "IBGP24",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65008",
-                "prefix-list-in": "shared-cost-65004",
-                "ipv6": "fde4:8::5",
-                "password": "IBGP25",
-                "external": "False",
-                "rr": "True"
-            }
-        ],
-        "namemin": "p2",
         "id": "2",
-        "AS": "65008",
-        "router-id": "100.251.23.6",
         "policies": [
             {
                 "name": "CUSTOMER",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "65009:1001 "
             },
             {
                 "name": "PROVIDER",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "65007:1002"
             },
             {
                 "name": "SHAREDCOST",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "65004:1003"
             },
             {
                 "name": "BACKUP",
-                "setting": "standard",
                 "type": "COMMUNITY-LIST",
+                "setting": "standard",
                 "value": "64512:1004"
             },
             {
                 "name": "provider-65007",
-                "ipv6": "fde4:7::/32",
-                "type": "EXPORT-FILTER"
+                "type": "EXPORT-FILTER",
+                "ipv6": "fde4:7::/32"
             },
             {
                 "name": "garbage",
                 "second": "10",
                 "type": "ROUTE-MAP",
-                "first": "5",
                 "first_pol": [
                     "set ip next-hop::1",
                     "set local-preference 5"
-                ]
+                ],
+                "first": "5"
             },
             {
-                "name": "customer",
-                "first_pol": [
+                "type": "ROUTE-MAP",
+                "second_pol": [
                     "set local-preference 50"
                 ],
+                "third": "20",
+                "first_pol": [
+                    "match community garbage",
+                    "call garbage"
+                ],
                 "second": "10",
-                "type": "ROUTE-MAP",
-                "first": "5",
-                "third": "[match community garbage;call garbage]"
+                "name": "customer",
+                "first": "5"
             },
             {
                 "name": "provider",
                 "second": "10",
                 "type": "ROUTE-MAP",
-                "first": "5",
                 "first_pol": [
                     "set local-preference 20"
-                ]
+                ],
+                "first": "5"
+            },
+            {
+                "name": "backup",
+                "second": "10",
+                "type": "ROUTE-MAP",
+                "first_pol": [
+                    "set local-preference 20"
+                ],
+                "first": "5"
             },
             {
                 "name": "shared-cost",
                 "second": "10",
                 "type": "ROUTE-MAP",
-                "first": "5",
                 "first_pol": [
                     "set local-preference 30"
-                ]
+                ],
+                "first": "5"
             }
         ],
         "next-hop": "False",
-        "area": "0.0.0.0",
+        "AS": "65008",
+        "namemin": "p2",
         "interfaces": [
             {
-                "name": "P1",
+                "id": "1",
                 "ipv6": "fde4:8:00:0102::2",
+                "name": "P1",
                 "virtual": "False",
-                "interface": "P2-eth0",
-                "id": "1"
+                "interface": "P2-eth0"
             },
             {
-                "name": "P3",
+                "id": "3",
                 "ipv6": "fde4:8:00:0203::2",
+                "name": "P3",
                 "virtual": "False",
-                "interface": "P2-eth1",
-                "id": "3"
+                "interface": "P2-eth1"
             },
             {
-                "name": "P4",
+                "id": "4",
                 "ipv6": "fde4:8:00:0204::2",
+                "name": "P4",
                 "virtual": "False",
-                "interface": "P2-eth2",
-                "id": "4"
+                "interface": "P2-eth2"
             },
             {
-                "name": "P5",
+                "id": "5",
                 "ipv6": "fde4:8:00:0205::2",
+                "name": "P5",
                 "virtual": "False",
-                "interface": "P2-eth3",
-                "id": "5"
+                "interface": "P2-eth3"
             },
             {
                 "ipv6": "fde4:8:a007::cafe",
+                "bridge": "eth6",
                 "virtual": "True",
-                "interface": "grp7",
-                "bridge": "eth6"
+                "interface": "grp7"
             },
             {
                 "ipv6": "fde4:8:b004::cafe",
+                "bridge": "eth7",
                 "virtual": "True",
-                "interface": "grp4",
-                "bridge": "eth7"
-            }
-        ]
-    },
-    {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::3"
-        },
-        "name": "P3",
-        "neighbors": [
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::1",
-                "password": "IBGP13",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::2",
-                "password": "IBGP23",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::6",
-                "password": "IBGP36",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::7",
-                "password": "IBGP37",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65008",
-                "prefix-list-in": "shared-cost-65004",
-                "ipv6": "fde4:8::10",
-                "password": "IBGP310",
-                "external": "False",
-                "rr": "True"
+                "interface": "grp4"
             }
         ],
-        "namemin": "p3",
-        "id": "3",
-        "AS": "65008",
-        "router-id": "100.251.23.7",
-        "policies": [],
-        "next-hop": "False",
-        "area": "0.0.0.0",
-        "interfaces": [
-            {
-                "name": "P1",
-                "ipv6": "fde4:8:00:0103::3",
-                "virtual": "False",
-                "interface": "P3-eth0",
-                "id": "1"
-            },
-            {
-                "name": "P2",
-                "ipv6": "fde4:8:00:0203::3",
-                "virtual": "False",
-                "interface": "P3-eth1",
-                "id": "2"
-            },
-            {
-                "name": "P6",
-                "ipv6": "fde4:8:00:0306::3",
-                "virtual": "False",
-                "interface": "P3-eth2",
-                "id": "6"
-            },
-            {
-                "name": "P7",
-                "ipv6": "fde4:8:00:0307::3",
-                "virtual": "False",
-                "interface": "P3-eth3",
-                "id": "7"
-            },
-            {
-                "name": "P10",
-                "ipv6": "fde4:8:00:0310::3",
-                "virtual": "False",
-                "interface": "P3-eth4",
-                "id": "10"
-            }
-        ]
-    },
-    {
         "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::4"
+            "ipv6": "fde4:8::2",
+            "name": "lo"
         },
-        "name": "P4",
+        "router-id": "100.251.23.6",
+        "name": "P2",
+        "area": "0.0.0.0",
         "neighbors": [
             {
-                "AS": "65008",
-                "ipv6": "fde4:8::1",
-                "password": "IBGP14",
-                "external": "False",
-                "rr": "False"
+                "prefix-list-in": "provider-65007",
+                "ipv6": "fde4:8:a007::beef",
+                "external": "True",
+                "AS": "65007",
+                "send-community": "true",
+                "password": "NETWORK0708",
+                "route-map-in": "provider",
+                "rr": "False",
+                "interface": "grp7"
             },
             {
-                "AS": "65008",
-                "ipv6": "fde4:8::2",
-                "password": "IBGP24",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::8",
-                "password": "IBGP48",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::9",
-                "password": "IBGP49",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65008",
                 "prefix-list-in": "shared-cost-65004",
-                "ipv6": "fde4:8::10",
-                "password": "IBGP410",
-                "external": "False",
-                "rr": "True"
-            }
-        ],
-        "namemin": "p4",
-        "id": "4",
-        "AS": "65008",
-        "router-id": "100.251.23.8",
-        "policies": [],
-        "next-hop": "False",
-        "area": "0.0.0.0",
-        "interfaces": [
-            {
-                "name": "P1",
-                "ipv6": "fde4:8:00:0104::4",
-                "virtual": "False",
-                "interface": "P4-eth0",
-                "id": "1"
+                "ipv6": "fde4:8:b004::beef",
+                "external": "True",
+                "AS": "65004",
+                "send-community": "true",
+                "password": "NETWORK0408",
+                "route-map-in": "shared-cost",
+                "rr": "False",
+                "interface": "grp4"
             },
             {
-                "name": "P2",
-                "ipv6": "fde4:8:00:0204::4",
-                "virtual": "False",
-                "interface": "P4-eth1",
-                "id": "2"
-            },
-            {
-                "name": "P8",
-                "ipv6": "fde4:8:00:0408::4",
-                "virtual": "False",
-                "interface": "P4-eth2",
-                "id": "8"
-            },
-            {
-                "name": "P9",
-                "ipv6": "fde4:8:00:0409::4",
-                "virtual": "False",
-                "interface": "P4-eth3",
-                "id": "9"
-            },
-            {
-                "name": "P10",
-                "ipv6": "fde4:8:00:0410::4",
-                "virtual": "False",
-                "interface": "P4-eth4",
-                "id": "10"
-            }
-        ]
-    },
-    {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::5"
-        },
-        "name": "P5",
-        "neighbors": [
-            {
-                "AS": "65008",
                 "ipv6": "fde4:8::1",
-                "password": "IBGP15",
+                "rr": "False",
                 "external": "False",
-                "rr": "False"
+                "AS": "65008",
+                "password": "IBGP12"
             },
             {
+                "ipv6": "fde4:8::3",
+                "rr": "True",
+                "external": "False",
                 "AS": "65008",
-                "ipv6": "fde4:8::2",
+                "password": "IBGP23"
+            },
+            {
+                "ipv6": "fde4:8::4",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP24"
+            },
+            {
+                "prefix-list-in": "shared-cost-65004",
+                "ipv6": "fde4:8::5",
+                "external": "False",
+                "AS": "65008",
                 "password": "IBGP25",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::6",
-                "password": "IBGP56",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::7",
-                "password": "IBGP57",
-                "external": "False",
-                "rr": "True"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::8",
-                "password": "IBGP58",
-                "external": "False",
-                "rr": "True"
-            },
-            {
                 "route-map-in": "shared-cost",
+                "rr": "True"
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "policies": [],
+        "next-hop": "False",
+        "AS": "65008",
+        "namemin": "p3",
+        "interfaces": [
+            {
+                "id": "1",
+                "ipv6": "fde4:8:00:0103::3",
+                "name": "P1",
+                "virtual": "False",
+                "interface": "P3-eth0"
+            },
+            {
+                "id": "2",
+                "ipv6": "fde4:8:00:0203::3",
+                "name": "P2",
+                "virtual": "False",
+                "interface": "P3-eth1"
+            },
+            {
+                "id": "6",
+                "ipv6": "fde4:8:00:0306::3",
+                "name": "P6",
+                "virtual": "False",
+                "interface": "P3-eth2"
+            },
+            {
+                "id": "7",
+                "ipv6": "fde4:8:00:0307::3",
+                "name": "P7",
+                "virtual": "False",
+                "interface": "P3-eth3"
+            },
+            {
+                "id": "10",
+                "ipv6": "fde4:8:00:0310::3",
+                "name": "P10",
+                "virtual": "False",
+                "interface": "P3-eth4"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::3",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.7",
+        "name": "P3",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "ipv6": "fde4:8::1",
+                "rr": "False",
+                "external": "False",
                 "AS": "65008",
+                "password": "IBGP13"
+            },
+            {
+                "ipv6": "fde4:8::2",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP23"
+            },
+            {
+                "ipv6": "fde4:8::6",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP36"
+            },
+            {
+                "ipv6": "fde4:8::7",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP37"
+            },
+            {
+                "prefix-list-in": "shared-cost-65004",
+                "ipv6": "fde4:8::10",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP310",
+                "route-map-in": "shared-cost",
+                "rr": "True"
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "policies": [],
+        "next-hop": "False",
+        "AS": "65008",
+        "namemin": "p4",
+        "interfaces": [
+            {
+                "id": "1",
+                "ipv6": "fde4:8:00:0104::4",
+                "name": "P1",
+                "virtual": "False",
+                "interface": "P4-eth0"
+            },
+            {
+                "id": "2",
+                "ipv6": "fde4:8:00:0204::4",
+                "name": "P2",
+                "virtual": "False",
+                "interface": "P4-eth1"
+            },
+            {
+                "id": "8",
+                "ipv6": "fde4:8:00:0408::4",
+                "name": "P8",
+                "virtual": "False",
+                "interface": "P4-eth2"
+            },
+            {
+                "id": "9",
+                "ipv6": "fde4:8:00:0409::4",
+                "name": "P9",
+                "virtual": "False",
+                "interface": "P4-eth3"
+            },
+            {
+                "id": "10",
+                "ipv6": "fde4:8:00:0410::4",
+                "name": "P10",
+                "virtual": "False",
+                "interface": "P4-eth4"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::4",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.8",
+        "name": "P4",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "ipv6": "fde4:8::1",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP14"
+            },
+            {
+                "ipv6": "fde4:8::2",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP24"
+            },
+            {
+                "ipv6": "fde4:8::8",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP48"
+            },
+            {
+                "ipv6": "fde4:8::9",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP49"
+            },
+            {
+                "prefix-list-in": "shared-cost-65004",
+                "ipv6": "fde4:8::10",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP410",
+                "route-map-in": "shared-cost",
+                "rr": "True"
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "policies": [],
+        "next-hop": "False",
+        "AS": "65008",
+        "namemin": "p5",
+        "interfaces": [
+            {
+                "id": "1",
+                "ipv6": "fde4:8:00:0105::5",
+                "name": "P1",
+                "virtual": "False",
+                "interface": "P5-eth0"
+            },
+            {
+                "id": "2",
+                "ipv6": "fde4:8:00:0205::5",
+                "name": "P2",
+                "virtual": "False",
+                "interface": "P5-eth1"
+            },
+            {
+                "id": "6",
+                "ipv6": "fde4:8:00:0506::5",
+                "name": "P6",
+                "virtual": "False",
+                "interface": "P5-eth2"
+            },
+            {
+                "id": "7",
+                "ipv6": "fde4:8:00:0507::5",
+                "name": "P7",
+                "virtual": "False",
+                "interface": "P5-eth3"
+            },
+            {
+                "id": "8",
+                "ipv6": "fde4:8:00:0508::5",
+                "name": "P8",
+                "virtual": "False",
+                "interface": "P5-eth4"
+            },
+            {
+                "id": "9",
+                "ipv6": "fde4:8:00:0509::5",
+                "name": "P9",
+                "virtual": "False",
+                "interface": "P5-eth5"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::5",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.9",
+        "name": "P5",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "ipv6": "fde4:8::1",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP15"
+            },
+            {
+                "ipv6": "fde4:8::2",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP25"
+            },
+            {
+                "ipv6": "fde4:8::6",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP56"
+            },
+            {
+                "ipv6": "fde4:8::7",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP57"
+            },
+            {
+                "ipv6": "fde4:8::8",
+                "rr": "True",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP58"
+            },
+            {
                 "prefix-list-in": "shared-cost-65004",
                 "ipv6": "fde4:8::9",
-                "password": "IBGP59",
                 "external": "False",
+                "AS": "65008",
+                "password": "IBGP59",
+                "route-map-in": "shared-cost",
                 "rr": "True"
             }
-        ],
-        "namemin": "p5",
-        "id": "5",
-        "AS": "65008",
-        "router-id": "100.251.23.9",
-        "policies": [],
-        "next-hop": "False",
-        "area": "0.0.0.0",
-        "interfaces": [
-            {
-                "name": "P1",
-                "ipv6": "fde4:8:00:0105::5",
-                "virtual": "False",
-                "interface": "P5-eth0",
-                "id": "1"
-            },
-            {
-                "name": "P2",
-                "ipv6": "fde4:8:00:0205::5",
-                "virtual": "False",
-                "interface": "P5-eth1",
-                "id": "2"
-            },
-            {
-                "name": "P6",
-                "ipv6": "fde4:8:00:0506::5",
-                "virtual": "False",
-                "interface": "P5-eth2",
-                "id": "6"
-            },
-            {
-                "name": "P7",
-                "ipv6": "fde4:8:00:0507::5",
-                "virtual": "False",
-                "interface": "P5-eth3",
-                "id": "7"
-            },
-            {
-                "name": "P8",
-                "ipv6": "fde4:8:00:0508::5",
-                "virtual": "False",
-                "interface": "P5-eth4",
-                "id": "8"
-            },
-            {
-                "name": "P9",
-                "ipv6": "fde4:8:00:0509::5",
-                "virtual": "False",
-                "interface": "P5-eth5",
-                "id": "9"
-            }
         ]
     },
     {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::6"
-        },
-        "name": "P6",
-        "neighbors": [
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::3",
-                "password": "IBGP36",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65008",
-                "prefix-list-in": "shared-cost-65004",
-                "ipv6": "fde4:8::5",
-                "password": "IBGP56",
-                "external": "False",
-                "rr": "False"
-            }
-        ],
-        "namemin": "p6",
         "id": "6",
-        "AS": "65008",
-        "router-id": "100.251.23.10",
         "policies": [],
         "next-hop": "False",
-        "area": "0.0.0.0",
+        "AS": "65008",
+        "namemin": "p6",
         "interfaces": [
             {
-                "name": "P3",
+                "id": "3",
                 "ipv6": "fde4:8:00:0306::6",
+                "name": "P3",
                 "virtual": "False",
-                "interface": "P6-eth0",
-                "id": "3"
+                "interface": "P6-eth0"
             },
             {
-                "name": "P5",
+                "id": "5",
                 "ipv6": "fde4:8:00:0506::6",
+                "name": "P5",
                 "virtual": "False",
-                "interface": "P6-eth1",
-                "id": "5"
+                "interface": "P6-eth1"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::6",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.10",
+        "name": "P6",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "ipv6": "fde4:8::3",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP36"
+            },
+            {
+                "prefix-list-in": "shared-cost-65004",
+                "ipv6": "fde4:8::5",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP56",
+                "route-map-in": "shared-cost",
+                "rr": "False"
             }
         ]
     },
     {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::7"
-        },
-        "name": "P7",
-        "neighbors": [
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::3",
-                "password": "IBGP37",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65008",
-                "prefix-list-in": "shared-cost-65004",
-                "ipv6": "fde4:8::5",
-                "password": "IBGP57",
-                "external": "False",
-                "rr": "False"
-            }
-        ],
-        "namemin": "p7",
         "id": "7",
-        "AS": "65008",
-        "router-id": "100.251.23.11",
         "policies": [],
         "next-hop": "False",
-        "area": "0.0.0.0",
+        "AS": "65008",
+        "namemin": "p7",
         "interfaces": [
             {
-                "name": "P3",
+                "id": "3",
                 "ipv6": "fde4:8:00:0307::7",
-                "virtual": "False",
-                "interface": "P7-eth0",
-                "id": "3"
-            },
-            {
-                "name": "P5",
-                "ipv6": "fde4:8:00:0507::7",
-                "virtual": "False",
-                "interface": "P7-eth1",
-                "id": "5"
-            }
-        ]
-    },
-    {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::8"
-        },
-        "name": "P8",
-        "neighbors": [
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::4",
-                "password": "IBGP48",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65008",
-                "prefix-list-in": "shared-cost-65004",
-                "ipv6": "fde4:8::5",
-                "password": "IBGP58",
-                "external": "False",
-                "rr": "False"
-            }
-        ],
-        "namemin": "p8",
-        "id": "8",
-        "AS": "65008",
-        "router-id": "100.251.23.12",
-        "policies": [],
-        "next-hop": "False",
-        "area": "0.0.0.0",
-        "interfaces": [
-            {
-                "name": "P4",
-                "ipv6": "fde4:8:00:0408::8",
-                "virtual": "False",
-                "interface": "P8-eth0",
-                "id": "4"
-            },
-            {
-                "name": "P5",
-                "ipv6": "fde4:8:00:0508::8",
-                "virtual": "False",
-                "interface": "P8-eth1",
-                "id": "5"
-            }
-        ]
-    },
-    {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::9"
-        },
-        "name": "P9",
-        "neighbors": [
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::4",
-                "password": "IBGP49",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "route-map-in": "shared-cost",
-                "AS": "65008",
-                "prefix-list-in": "shared-cost-65004",
-                "ipv6": "fde4:8::5",
-                "password": "IBGP59",
-                "external": "False",
-                "rr": "False"
-            }
-        ],
-        "namemin": "p9",
-        "id": "9",
-        "AS": "65008",
-        "router-id": "100.251.23.13",
-        "policies": [],
-        "next-hop": "False",
-        "area": "0.0.0.0",
-        "interfaces": [
-            {
-                "name": "P4",
-                "ipv6": "fde4:8:00:0409::9",
-                "virtual": "False",
-                "interface": "P9-eth0",
-                "id": "4"
-            },
-            {
-                "name": "P5",
-                "ipv6": "fde4:8:00:0509::9",
-                "virtual": "False",
-                "interface": "P9-eth1",
-                "id": "5"
-            }
-        ]
-    },
-    {
-        "loopback": {
-            "name": "lo",
-            "ipv6": "fde4:8::10"
-        },
-        "name": "P10",
-        "neighbors": [
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::3",
-                "password": "IBGP310",
-                "external": "False",
-                "rr": "False"
-            },
-            {
-                "AS": "65008",
-                "ipv6": "fde4:8::4",
-                "password": "IBGP410",
-                "external": "False",
-                "rr": "False"
-            }
-        ],
-        "namemin": "p10",
-        "id": "10",
-        "AS": "65008",
-        "router-id": "100.251.23.14",
-        "policies": [],
-        "next-hop": "False",
-        "area": "0.0.0.0",
-        "interfaces": [
-            {
                 "name": "P3",
-                "ipv6": "fde4:8:00:0310::10",
                 "virtual": "False",
-                "interface": "P10-eth0",
-                "id": "3"
+                "interface": "P7-eth0"
             },
             {
-                "name": "P4",
-                "ipv6": "fde4:8:00:0410::10",
+                "id": "5",
+                "ipv6": "fde4:8:00:0507::7",
+                "name": "P5",
                 "virtual": "False",
-                "interface": "P10-eth1",
-                "id": "4"
+                "interface": "P7-eth1"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::7",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.11",
+        "name": "P7",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "ipv6": "fde4:8::3",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP37"
+            },
+            {
+                "prefix-list-in": "shared-cost-65004",
+                "ipv6": "fde4:8::5",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP57",
+                "route-map-in": "shared-cost",
+                "rr": "False"
+            }
+        ]
+    },
+    {
+        "id": "8",
+        "policies": [],
+        "next-hop": "False",
+        "AS": "65008",
+        "namemin": "p8",
+        "interfaces": [
+            {
+                "id": "4",
+                "ipv6": "fde4:8:00:0408::8",
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P8-eth0"
+            },
+            {
+                "id": "5",
+                "ipv6": "fde4:8:00:0508::8",
+                "name": "P5",
+                "virtual": "False",
+                "interface": "P8-eth1"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::8",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.12",
+        "name": "P8",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "ipv6": "fde4:8::4",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP48"
+            },
+            {
+                "prefix-list-in": "shared-cost-65004",
+                "ipv6": "fde4:8::5",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP58",
+                "route-map-in": "shared-cost",
+                "rr": "False"
+            }
+        ]
+    },
+    {
+        "id": "9",
+        "policies": [],
+        "next-hop": "False",
+        "AS": "65008",
+        "namemin": "p9",
+        "interfaces": [
+            {
+                "id": "4",
+                "ipv6": "fde4:8:00:0409::9",
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P9-eth0"
+            },
+            {
+                "id": "5",
+                "ipv6": "fde4:8:00:0509::9",
+                "name": "P5",
+                "virtual": "False",
+                "interface": "P9-eth1"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::9",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.13",
+        "name": "P9",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "ipv6": "fde4:8::4",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP49"
+            },
+            {
+                "prefix-list-in": "shared-cost-65004",
+                "ipv6": "fde4:8::5",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP59",
+                "route-map-in": "shared-cost",
+                "rr": "False"
+            }
+        ]
+    },
+    {
+        "id": "10",
+        "policies": [],
+        "next-hop": "False",
+        "AS": "65008",
+        "namemin": "p10",
+        "interfaces": [
+            {
+                "id": "3",
+                "ipv6": "fde4:8:00:0310::10",
+                "name": "P3",
+                "virtual": "False",
+                "interface": "P10-eth0"
+            },
+            {
+                "id": "4",
+                "ipv6": "fde4:8:00:0410::10",
+                "name": "P4",
+                "virtual": "False",
+                "interface": "P10-eth1"
+            }
+        ],
+        "loopback": {
+            "ipv6": "fde4:8::10",
+            "name": "lo"
+        },
+        "router-id": "100.251.23.14",
+        "name": "P10",
+        "area": "0.0.0.0",
+        "neighbors": [
+            {
+                "ipv6": "fde4:8::3",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP310"
+            },
+            {
+                "ipv6": "fde4:8::4",
+                "rr": "False",
+                "external": "False",
+                "AS": "65008",
+                "password": "IBGP410"
             }
         ]
     }
